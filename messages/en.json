@@ -1,0 +1,28 @@
+{
+  "setting": {
+    "title": "Setting",
+    "titleLanguage": "Language",
+    "titleTheme": "Theme",
+    "version": "Version"
+  },
+  "home": {
+    "sub": "Try out some of the most popular question banks in Gamedle.io!"
+  },
+  "card": {
+    "ques": "Question",
+    "play": "Play now"
+  },
+  "about": {
+    "title": "About me",
+    "line1": "Hello, my name is Luong Khoa, the person who created this website!",
+    "line2": "First of all, I hope this website can make you happy, if anything makes you feel uncomfortable, I hope you can ignore it.",
+    "line3": "I only made this website alone so there may be a lot of errors.",
+    "line4": "Please let me know if there are any errors on Discord! You can meet new friends there too :D"
+  },
+  "privacy": {
+    "content": "<p>By using this website you agree to game data being saved.</p> <p>Game data is used to enhance your game experience!</p>  <p>Ad stuff </p><p>Third party vendors,including Google and other ad networks, use cookies to serve ads based on a user's prior visits to your website or other websites. </p><p>Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet. Users may opt out of personalized advertising by visiting Ads Settings.</p>"
+  },
+  "countdown": {
+    "title": "New game in"
+  }
+}

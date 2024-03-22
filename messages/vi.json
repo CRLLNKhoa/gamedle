@@ -1,0 +1,30 @@
+{
+  "setting": {
+    "title": "Thiết lập trang",
+    "titleLanguage": "Ngôn ngữ",
+    "titleTheme": "Giao diện",
+    "version": "Phiên bản"
+  },
+  "home": {
+    "sub": "Hãy thử một số ngân hàng câu hỏi phổ biến nhất trong Gamedle!"
+  }
+  ,
+  "card": {
+    "ques": "Câu hỏi",
+    "play": "Chơi ngay"
+  }
+  ,
+  "about": {
+    "title": "Giới thiệu về tôi",
+    "line1": "Xin chào tôi là Lương Khoa là người đã làm ra website này!",
+    "line2": "Trước hết tôi hy vọng website này có thể làm cho bạn vui vẻ, nếu có điều gì làm bạn cảm thấy khó chịu mong bạn có thể bỏ qua.",
+    "line3": "Tôi chỉ làm website này 1 mình nên là có thể có rất nhìu lỗi.",
+    "line4": "Vui lòng cho tôi biết nếu có bất kỳ lỗi nào trên Discord! Bạn cũng có thể gặp gỡ những người bạn mới ở đó nữa :D"
+  },
+  "privacy": {
+    "content": "<p>Bằng cách sử dụng trang web này, bạn đồng ý lưu dữ liệu trò chơi.</p> <p>Dữ liệu trò chơi được sử dụng để nâng cao trải nghiệm trò chơi của bạn!</p> <p>Nội dung quảng cáo </p> <p>Các nhà cung cấp bên thứ ba, bao gồm Google và các mạng quảng cáo khác, sử dụng cookie để phân phát quảng cáo dựa trên những lần truy cập trước đó của người dùng vào trang web của bạn hoặc các trang web khác. </p><p>Việc sử dụng cookie quảng cáo của Google cho phép Google và các đối tác của Google phân phát quảng cáo cho người dùng của bạn dựa trên lượt truy cập của họ vào trang web của bạn và/hoặc các trang web khác trên Internet. Người dùng có thể chọn không tham gia quảng cáo được cá nhân hóa bằng cách truy cập Cài đặt quảng cáo.</p>"
+  },
+  "countdown": {
+    "title": "Game mới bất đầu sau"
+  }
+}
