@@ -6,7 +6,7 @@ export async function getGame(id: number) {
       const supabase = await createSupabaseServerClient();
       const { data, error } = await supabase
         .from("guess_the_game")
-        .select("*")
+        .select("*").eq("id", id)
       if (error) {
         return { status: 400, data: [error]};
       } else return { status: 200, data: data };

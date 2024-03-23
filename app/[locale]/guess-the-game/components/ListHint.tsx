@@ -11,6 +11,9 @@ export default function ListHint() {
   const currHint = useGTGStore((state: any) => state.currHint);
   const [hintUnlock, setHintUnlock] = useState<number>(1);
   const gameplayed = useGTGStore((state: any) => state.gameplayed);
+  const listAns = useGTGStore((state: any) => state.listAns);
+  const setListAns = useGTGStore((state: any) => state.setListAns);
+  const setGamePlayed = useGTGStore((state: any) => state.setGamePlayed);
 
   useEffect(() => {
     const messageLose = () => {
@@ -23,6 +26,16 @@ export default function ListHint() {
     };
     if (hintUnlock > 6) {
       messageLose();
+      setGamePlayed([...gameplayed, game?.id]);
+      setCurrHint(game?.hints[5]);
+      localStorage.setItem(
+        "gamedle-data-guess-the-game-played",
+        JSON.stringify([...gameplayed, game?.id])
+      );
+      localStorage.setItem(
+        `gamedle-data-guess-the-game-played-result-id:${game?.id}`,
+        JSON.stringify({list_ans: listAns,hint_unlock: hintUnlock})
+      );
     }
   }, [hintUnlock]);
 
@@ -32,10 +45,13 @@ export default function ListHint() {
         <div className="flex gap-2 items-center justify-center w-full">
           {game?.hints?.map((hint: any) => (
             <Button
+              key={hint?.step}
               onClick={() => {
                 setCurrHint(hint);
               }}
-              variant={currHint.step === hint?.step ? "destructive" : "default"}
+              variant={
+                currHint?.step === hint?.step ? "destructive" : "default"
+              }
               size={"icon"}
             >
               {hint?.step}
@@ -43,15 +59,16 @@ export default function ListHint() {
           ))}
         </div>
       ) : (
-        <>
+        <div className="flex flex-wrap items-center justify-center lg:justify-between w-full gap-y-2">
           <div className="flex gap-2">
             {game?.hints?.map((hint: any) => (
               <Button
+                key={hint?.step}
                 onClick={() => {
                   setCurrHint(hint);
                 }}
                 variant={
-                  currHint.step === hint?.step ? "destructive" : "default"
+                  currHint?.step === hint?.step ? "destructive" : "default"
                 }
                 disabled={hint?.step > hintUnlock}
                 size={"icon"}
@@ -61,12 +78,16 @@ export default function ListHint() {
             ))}
           </div>
           <Button
-            onClick={() => setHintUnlock(hintUnlock + 1)}
+            onClick={() => {
+              setListAns([...listAns, "Skipped!"]),
+                setHintUnlock(hintUnlock + 1),
+                setCurrHint(game.hints[hintUnlock]);
+            }}
             className="flex items-center bg-green-600 hover:bg-green-700 duration-500"
           >
             Bỏ qua <PiCaretDoubleRightFill className="w-4 h-4 ml-2" />
           </Button>
-        </>
+        </div>
       )}
     </div>
   );

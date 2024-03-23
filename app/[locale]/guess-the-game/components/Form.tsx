@@ -12,10 +12,20 @@ import { Input } from "@/components/ui/input";
 import dataSearch from "@/jsons/games-name.json";
 import _ from "lodash";
 import { VscArrowSmallRight } from "react-icons/vsc";
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { useGTGStore } from "@/stores/useGTGStore";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import Confetti from "react-confetti";
 
 export default function Form() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
+  const game = useGTGStore((state: any) => state.game);
+  const listAns = useGTGStore((state: any) => state.listAns);
+  const setListAns = useGTGStore((state: any) => state.setListAns);
+  const [showConfetti,setShowConfetti] = useState(false)
+  const setGamePlayed = useGTGStore((state: any) => state.setGamePlayed);
+  const gameplayed = useGTGStore((state: any) => state.gameplayed);
 
   useEffect(() => {
     const debouncedSearch = _.debounce((value) => {
@@ -37,12 +47,53 @@ export default function Form() {
     setSearchTerm(event.target.value);
   };
 
+  useEffect(() => {
+    // Thiết lập một timeout để thay đổi trạng thái sau 1 giây
+    const timeout = setTimeout(() => {
+      setShowConfetti(false); // Đặt trạng thái thành false
+    }, 5000);
+    // Hủy timeout khi component unmount
+    return () => clearTimeout(timeout);
+  }, [showConfetti]);
+
+  const handleCheck = () => {
+    if (searchTerm !== "") {
+      if (game.answer === searchTerm) {
+        Swal.fire({
+          title: "Correct !",
+          text: `The answer was: ${game?.answer}`,
+          icon: "success",
+          confirmButtonText: "Quay lại",
+        });
+        setGamePlayed([...gameplayed, game?.id])
+        setShowConfetti(true)
+        localStorage.setItem(
+          "gamedle-data-guess-the-game-played",
+          JSON.stringify([...gameplayed, game?.id])
+        );
+        localStorage.setItem(
+          `gamedle-data-guess-the-game-played-result-id:${game?.id}`,
+          JSON.stringify({list_ans: listAns,hint_unlock: listAns?.length})
+        );
+      } else {
+        Swal.fire({
+          title: "Chưa đúng!",
+          text: "Hãy mở thêm gợi ý!",
+          icon: "error",
+          confirmButtonText: "Quay lại",
+        });
+        setListAns([...listAns, searchTerm]);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 items-center">
+      {showConfetti && <Confetti className="w-full h-full fixed" />}
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="outline" className="w-full">
-            Tìm kiếm một trò chơi...
+            {searchTerm !== "" ? searchTerm : "Tìm kiếm một trò chơi..."}
           </Button>
         </DrawerTrigger>
         <DrawerContent>
@@ -61,6 +112,7 @@ export default function Form() {
                     <li
                       className="cursor-pointer line-clamp-1 flex items-center gap-2 hover:bg-sky-600/60"
                       key={item}
+                      onClick={() => setSearchTerm(item)}
                     >
                       <VscArrowSmallRight />
                       {item}
@@ -77,14 +129,21 @@ export default function Form() {
           </div>
         </DrawerContent>
       </Drawer>
-      <Button className="min-w-[240px] bg-green-600 hover:bg-green-700 duration-500">
-        Kiểm tra
+      <Button onClick={handleCheck} className="min-w-[240px] duration-500">
+        <FaRegCircleCheck className="w-4 h-4 mr-2" /> Kiểm tra
       </Button>
-      {/* <div className='flex flex-col gap-2 w-full'>
-        <Input className='w-full' readOnly value={"❌Dreamer Series: Pop Star"} />
-        <Input readOnly value={"❌Dreamer Series: Pop Star"} />
-        <Input readOnly value={"❌Dreamer Series: Pop Star"} />
-    </div> */}
+      <div className="flex flex-col gap-2 w-full">
+        {listAns.map((_:any) => (
+          <Button
+            key={_}
+            disabled
+            variant={"outline"}
+            className="line-clamp-1 select-none"
+          >
+            ❌ {_}{" "}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }

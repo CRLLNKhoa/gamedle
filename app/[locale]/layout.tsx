@@ -3,7 +3,7 @@ import "@/app/globals.css";
 import Hearder from "@/app/components/header";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Space_Grotesk } from "next/font/google";
-
+import 'sweetalert2/src/sweetalert2.scss'
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Footer from "../components/footer";

@@ -26,5 +26,13 @@
   },
   "countdown": {
     "title": "Game mới bất đầu sau"
+  },
+  "gamefinish": {
+    "title": "Câu trả lời là:",
+    "titlebutton":  "Chia sẻ kết quả",
+    "titleplay": "Chơi game trước",
+    "titlechart": "Xem thống kê",
+    "titleshow": "Hiện các dự đoán",
+    "titlebuttoncopied": "Đã sao chép !"
   }
 }

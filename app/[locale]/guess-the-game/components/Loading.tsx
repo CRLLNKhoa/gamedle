@@ -5,7 +5,7 @@ export default function Loading() {
   return (
     <div className="flex items-center justify-center relative mb-8">
       <motion.div
-        className="bg-gradient-to-r from-cyan-200 to-cyan-400 size-[160px] rounded-xl"
+        className="bg-black size-[160px] rounded-xl"
         animate={{
           scale: [1, 1.2, 1.2, 1, 1],
           rotate: [0, 0, 180, 180, 0],
@@ -21,7 +21,7 @@ export default function Loading() {
       />
       <h1
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-      font-bold text-black select-none"
+      font-bold text-white select-none"
       >
         Loading...
       </h1>

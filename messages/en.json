@@ -24,5 +24,13 @@
   },
   "countdown": {
     "title": "New game in"
+  },
+  "gamefinish": {
+    "title": "The answer was:",
+    "titlebutton":  "Share results",
+    "titleplay": "Play Previous Game",
+    "titlechart": "See Game Stats",
+    "titleshow": "Show guesses",
+    "titlebuttoncopied": "Copied !"
   }
 }

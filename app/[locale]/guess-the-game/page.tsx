@@ -7,8 +7,12 @@ import { getGame } from "@/actions/guess-the-game";
 import { useGTGStore } from "@/stores/useGTGStore";
 import Loading from "./components/Loading";
 import GameFinish from "./components/gameFinish";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+  console.log(id)
   const [isClient, setIsClient] = useState<boolean>(false);
   const game = useGTGStore((state: any) => state.game);
   const setGame = useGTGStore((state: any) => state.setGame);
@@ -23,7 +27,6 @@ export default function Page() {
     }
   }, []);
 
-
   const handleGetGame = async () => {
     // Ngày hiện tại
     const homNay: Date = new Date();
@@ -33,9 +36,15 @@ export default function Page() {
     const soMiligiay: number = homNay.getTime() - ngayCuThe.getTime();
     // Chuyển đổi số mili giây thành số ngày
     const soNgay: number = Math.ceil(soMiligiay / (1000 * 60 * 60 * 24));
-    const game = await getGame(soNgay);
+    if(id === null){
+      const game = await getGame(soNgay);
     setGame(game?.data[0]);
     setCurrHint(game?.data[0]?.hints[0]);
+    }else {
+      const game = await getGame(Number(id));
+    setGame(game?.data[0]);
+    setCurrHint(game?.data[0]?.hints[0]);
+    }
   };
 
   useEffect(() => {
@@ -50,8 +59,8 @@ export default function Page() {
       ) : (
         <Loading />
       )}
-      <Form />
-      {gameplayed.includes(game?.id) && <GameFinish />}
+       {!gameplayed.includes(game?.id) &&  <Form />}
+      {gameplayed.includes(game?.id) && <GameFinish id={game?.id} />}
       {isClient && <Timenewgame />}
     </main>
   );

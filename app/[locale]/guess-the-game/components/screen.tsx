@@ -7,7 +7,6 @@ import { useGTGStore } from '@/stores/useGTGStore'
 export default function Screen() {
   const currHint = useGTGStore((state:any) => state.currHint)
   const game = useGTGStore((state:any) => state.game)
-  console.log(currHint)
   return (
     <div className='flex flex-col w-full'>
       <p className='text-center mb-2'>Game #{game?.id}</p>

@@ -5,6 +5,7 @@ export const useGTGStore = create((set) => ({
   currHint: undefined,
   status: undefined,
   gameplayed: [],
+  listAns: [],
   //   ---------------------------------------
 
   setGame: (data: any) => set((state: { game: any }) => ({ game: data })),
@@ -12,4 +13,5 @@ export const useGTGStore = create((set) => ({
     set((state: { currHint: any }) => ({ currHint: data })),
   setStatus: (data: any) => set((state: { status: any }) => ({ status: data })),
   setGamePlayed: (data: any) => set((state: { gameplayed: any }) => ({ gameplayed: data })),
+  setListAns: (data: any) => set((state: { listAns: any }) => ({ listAns: data })),
 }));
