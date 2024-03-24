@@ -36,7 +36,7 @@ const data = [
 // Ngày hiện tại
 const homNay: Date = new Date();
 // Ngày cụ thể bạn muốn tính đến
-const ngayCuThe: Date = new Date("2024-03-22"); // Thay '2024-03-30' bằng ngày bạn muốn
+const ngayCuThe: Date = new Date("2024-03-24"); // Thay '2024-03-30' bằng ngày bạn muốn
 // Tính số mili giây giữa hai ngày
 const soMiligiay: number = homNay.getTime() - ngayCuThe.getTime();
 // Chuyển đổi số mili giây thành số ngày
