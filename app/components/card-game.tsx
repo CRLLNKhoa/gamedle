@@ -9,20 +9,20 @@ import { Link } from "@/navigation";
 export default function CardGame(_props: {
   title: string;
   mode: number;
-  ques: number;
+  ques: string | number;
   href: string;
   img: string,
   textColor?: string
 }) {
   const trans = useTranslations("card");
   return (
-    <div className="border rounded-xl p-4 bg-foreground/60 flex flex-col">
+    <div className="border rounded-xl p-4 bg-foreground/80 flex flex-col">
       <div className="flex gap-2 justify-between">
         <div className="flex flex-col">
           <Link href={_props.href} className={cn("text-white dark:text-black text-lg line-clamp-2 leading-6",_props.textColor)}>
             {_props.title}
           </Link>
-          <p className="text-muted text-sm">Made by @CaroloKhoa</p>
+          <p className="text-muted text-xs">Made by @CaroloKhoa</p>
         </div>
         <img
           src={_props.img}

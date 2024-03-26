@@ -14,7 +14,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { IoMdSunny } from "react-icons/io";
 import { IoMoon } from "react-icons/io5";
 import { useTheme } from "next-themes";
-import { Input } from "@/components/ui/input";
+
+
 export default function Setting() {
   const [isClient, setIsClient] = useState(false);
   const trans = useTranslations("setting");

@@ -12,8 +12,8 @@ export default function Index() {
       </div>
       <p className="text-center">{trans("sub")}</p>
       <div className="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
-        <CardGame title="Day Bygones" textColor="text-sky-400" mode={5} ques={45} href="/dbg" img="/imgs/card/Dino.png"/>
-        <CardGame title="Guess The Game" mode={5} ques={45} href="/guess-the-game" img="/imgs/card/74.png"/>
+        <CardGame title="Day Bygones" textColor="text-green-600 font-bold" mode={5} ques={45} href="/dbg" img="/imgs/card/Dino.png"/>
+        <CardGame title="Guess The Game"  textColor="text-red-600 font-bold" mode={5} ques={"+99"} href="/guess-the-game" img="/imgs/card/74.png"/>
       </div>
     </main>
   );
