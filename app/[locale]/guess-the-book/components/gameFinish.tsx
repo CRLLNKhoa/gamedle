@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useGTGStore } from "@/stores/useGTGStore";
+import { useGTBStore } from "@/stores/useGTBStore";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { FaShareAlt } from "react-icons/fa";
@@ -71,7 +71,7 @@ const data = [
 // Ngày hiện tại
 const homNay: Date = new Date();
 // Ngày cụ thể bạn muốn tính đến
-const ngayCuThe: Date = new Date("2024-03-24"); // Thay '2024-03-30' bằng ngày bạn muốn
+const ngayCuThe: Date = new Date("2024-03-27"); // Thay '2024-03-30' bằng ngày bạn muốn
 // Tính số mili giây giữa hai ngày
 const soMiligiay: number = homNay.getTime() - ngayCuThe.getTime();
 // Chuyển đổi số mili giây thành số ngày
@@ -79,14 +79,14 @@ const soNgay: number = Math.ceil(soMiligiay / (1000 * 60 * 60 * 24));
 
 export default function GameFinish(_props: { id: string }) {
   const trans = useTranslations("gamefinish");
-  const game = useGTGStore((state: any) => state.game);
-  const gameplayed = useGTGStore((state: any) => state.gameplayed);
+  const game = useGTBStore((state: any) => state.game);
+  const gameplayed = useGTBStore((state: any) => state.gameplayed);
   const [result, setResult] = useState<any>({});
   const [copiedText, copy] = useCopyToClipboard();
 
   useEffect(() => {
     const storedResult = localStorage.getItem(
-      `gamedle-data-guess-the-game-played-result-id:${_props.id}`
+      `gamedle-data-guess-the-book-played-result-id:${_props.id}`
     );
     if (storedResult) {
       setResult(JSON.parse(storedResult));
@@ -116,7 +116,7 @@ export default function GameFinish(_props: { id: string }) {
             result?.list_ans?.length
           }🟥   ${
             6 - result?.list_ans?.length
-          }🟩    https://gamesdle.vercel.app/guess-the-game?id=${game?.id}`
+          }🟩    https://gamedle.online/guess-the-book?id=${game?.id}`
         )}
       >
         <FaShareAlt className="mr-2 w-4 h-4" />{" "}
@@ -175,7 +175,7 @@ export default function GameFinish(_props: { id: string }) {
             <DialogHeader>
               <DialogTitle>Game #{game?.id} Statistics</DialogTitle>
             </DialogHeader>
-            <div className="flex items-center flex-col gap-4 h-[200px] w-full pb-4">
+            <div className="flex items-center flex-col gap-4 h-[240px] w-full pb-4">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={400} height={400}>
                   <Pie

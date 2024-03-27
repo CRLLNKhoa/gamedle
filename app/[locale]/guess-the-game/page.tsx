@@ -13,7 +13,6 @@ import HeaderGame from "./components/HeaderGame";
 export default function Page() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
-  console.log(id)
   const [isClient, setIsClient] = useState<boolean>(false);
   const game = useGTGStore((state: any) => state.game);
   const setGame = useGTGStore((state: any) => state.setGame);
@@ -51,7 +50,7 @@ export default function Page() {
   useEffect(() => {
     setIsClient(true);
     handleGetGame();
-  }, []);
+  }, [id]);
 
   return (
     <main className="flex flex-col container flex-1 max-w-lg py-4">

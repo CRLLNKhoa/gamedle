@@ -16,22 +16,22 @@ export default function CardGame(_props: {
 }) {
   const trans = useTranslations("card");
   return (
-    <div className="border rounded-xl p-4 bg-foreground/80 flex flex-col">
+    <div className="border rounded-xl p-4 flex flex-col">
       <div className="flex gap-2 justify-between">
         <div className="flex flex-col">
-          <Link href={_props.href} className={cn("text-white dark:text-black text-lg line-clamp-2 leading-6",_props.textColor)}>
+          <Link href={_props.href} className={cn("text-black dark:text-white text-lg line-clamp-2 leading-6",_props.textColor)}>
             {_props.title}
           </Link>
-          <p className="text-muted text-xs">Made by @CaroloKhoa</p>
+          <p className="text-muted-foreground text-xs">Made by @CaroloKhoa</p>
         </div>
         <img
           src={_props.img}
           alt="gamedle-img"
-          className="w-14 h-14 rounded-md"
+          className="w-14 h-14 rounded-md object-cover"
         />
       </div>
       <div className="flex gap-2 justify-between items-center mt-2">
-        <div className="flex items-center text-white dark:text-black gap-2 text-xs">
+        <div className="flex items-center text-muted-foreground  gap-2 text-xs">
           <span className="flex items-center gap-1 border border-dashed rounded-full px-2 cursor-pointer">
           {_props.mode} <FaRegStar />
           </span>
@@ -39,7 +39,7 @@ export default function CardGame(_props: {
           {_props.ques} {trans("ques")}
           </span>
         </div>
-        <Link href={_props.href} className="flex items-center justify-center text-white dark:text-black border px-2 rounded-md cursor-pointer text-sm py-1 hover:scale-105 duration-500">
+        <Link href={_props.href} className="flex items-center justify-center text-black dark:text-white border px-2 rounded-md cursor-pointer text-sm py-1 hover:scale-105 duration-500">
           {trans("play")}
         </Link>
       </div>

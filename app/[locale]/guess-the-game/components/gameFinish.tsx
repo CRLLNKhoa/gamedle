@@ -116,7 +116,7 @@ export default function GameFinish(_props: { id: string }) {
             result?.list_ans?.length
           }🟥   ${
             6 - result?.list_ans?.length
-          }🟩    https://gamesdle.vercel.app/guess-the-game?id=${game?.id}`
+          }🟩    https://gamedle.online/guess-the-game?id=${game?.id}`
         )}
       >
         <FaShareAlt className="mr-2 w-4 h-4" />{" "}
@@ -175,7 +175,7 @@ export default function GameFinish(_props: { id: string }) {
             <DialogHeader>
               <DialogTitle>Game #{game?.id} Statistics</DialogTitle>
             </DialogHeader>
-            <div className="flex items-center flex-col gap-4 h-[200px] w-full pb-4">
+            <div className="flex items-center flex-col gap-4 h-[240px] w-full pb-4">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={400} height={400}>
                   <Pie

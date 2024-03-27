@@ -1,43 +1,44 @@
 import { Button } from "@/components/ui/button";
-import { useGTGStore } from "@/stores/useGTGStore";
+import { useGTBStore } from "@/stores/useGTBStore";
 import React, { useEffect, useState } from "react";
 import { PiCaretDoubleRightFill } from "react-icons/pi";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 
 export default function ListHint() {
-  const game = useGTGStore((state: any) => state.game);
-  const setCurrHint = useGTGStore((state: any) => state.setCurrHint);
-  const currHint = useGTGStore((state: any) => state.currHint);
-  const [hintUnlock, setHintUnlock] = useState<number>(1);
-  const gameplayed = useGTGStore((state: any) => state.gameplayed);
-  const listAns = useGTGStore((state: any) => state.listAns);
-  const setListAns = useGTGStore((state: any) => state.setListAns);
-  const setGamePlayed = useGTGStore((state: any) => state.setGamePlayed);
+  const game = useGTBStore((state: any) => state.game);
+  const setCurrHint = useGTBStore((state: any) => state.setCurrHint);
+  const currHint = useGTBStore((state: any) => state.currHint);
+  const hintUnlock = useGTBStore((state: any) => state.hintUnlock)
+  const setHintUnlock = useGTBStore((state: any) => state.setHintUnlock)
+  const gameplayed = useGTBStore((state: any) => state.gameplayed);
+  const listAns = useGTBStore((state: any) => state.listAns);
+  const setListAns = useGTBStore((state: any) => state.setListAns);
+  const setGamePlayed = useGTBStore((state: any) => state.setGamePlayed);
 
   useEffect(() => {
     const messageLose = () => {
       Swal.fire({
         title: "Oh no! Better luck next time!",
-        text: "The answer was: The Forgotten City",
+        text: `The answer was: ${game?.answer}`,
         icon: "error",
         confirmButtonText: "Close",
       });
     };
-    if (hintUnlock > 6) {
+    if (hintUnlock > 6 || listAns?.length === 6) {
       messageLose();
       setGamePlayed([...gameplayed, game?.id]);
       setCurrHint(game?.hints[5]);
       localStorage.setItem(
-        "gamedle-data-guess-the-game-played",
+        "gamedle-data-guess-the-book-played",
         JSON.stringify([...gameplayed, game?.id])
       );
       localStorage.setItem(
-        `gamedle-data-guess-the-game-played-result-id:${game?.id}`,
+        `gamedle-data-guess-the-book-played-result-id:${game?.id}`,
         JSON.stringify({list_ans: listAns,hint_unlock: hintUnlock})
       );
     }
-  }, [hintUnlock]);
+  }, [hintUnlock, listAns]);
 
   return (
     <div className="flex py-4 items-center justify-between">

@@ -26,6 +26,10 @@ export default function Form() {
   const [showConfetti,setShowConfetti] = useState(false)
   const setGamePlayed = useGTGStore((state: any) => state.setGamePlayed);
   const gameplayed = useGTGStore((state: any) => state.gameplayed);
+  const setHintUnlock = useGTGStore((state: any) => state.setHintUnlock)
+  const setCurrHint = useGTGStore((state: any) => state.setCurrHint);
+  const hintUnlock = useGTGStore((state: any) => state.hintUnlock)
+
 
   useEffect(() => {
     const debouncedSearch = _.debounce((value) => {
@@ -83,6 +87,8 @@ export default function Form() {
           confirmButtonText: "Quay lại",
         });
         setListAns([...listAns, searchTerm]);
+        setHintUnlock()
+        setCurrHint(game.hints[hintUnlock])
       }
     }
   };

@@ -66,7 +66,15 @@ export default function HeaderGame() {
             <LuHelpCircle className="w-6 h-6" />
           </DialogTrigger>
           <DialogContent>
-            <div className="flex flex-col gap-4"></div>
+            <div className="flex flex-col gap-4">
+              <h1 className="font-bold text-xl">Hướng dẫn</h1>
+              <div className="flex flex-col gap-4">
+                <p>Tìm kiếm cuốn sách mà bạn nghĩ có câu đó.</p>
+                <p>Nếu bạn hiểu sai, chúng tôi sẽ tiết lộ thêm một câu trong sách để giúp bạn.</p>
+                <p>Bạn nhận được tổng cộng 6 lần đoán.</p>
+                <p>Chúc may mắn!</p>
+              </div>
+            </div>
           </DialogContent>
         </Dialog>
       </div>

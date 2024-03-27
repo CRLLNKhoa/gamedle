@@ -5,14 +5,14 @@ export default function Game(_props: { id: string }) {
   const [data, setData] = useState<any>(null);
   useEffect(() => {
     const storedResult = localStorage.getItem(
-      `gamedle-data-guess-the-game-played-result-id:${_props.id}`
+      `gamedle-data-guess-the-book-played-result-id:${_props.id}`
     );
     if (storedResult) {
       setData(JSON.parse(storedResult));
     }
   }, [_props.id]);
   return (
-    <Link href={`/guess-the-game?${_props.id}`} className="w-full flex items-center lg:justify-between cursor-pointer hover:bg-black/20 mr-2 py-1 px-2 duration-500 rounded-md">
+    <Link href={`/guess-the-book?id=${_props.id}`} className="w-full flex items-center lg:justify-between cursor-pointer hover:bg-black/20 mr-2 py-1 px-2 duration-500 rounded-md">
       <h1 className="bg-sky-600 text-white px-2 text-sm font-bold rounded-md">Game {_props.id}</h1>
       {data !== null && (
         <div className="flex flex-1 justify-center items-center">

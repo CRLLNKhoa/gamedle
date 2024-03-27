@@ -9,22 +9,23 @@ export default function ListHint() {
   const game = useGTGStore((state: any) => state.game);
   const setCurrHint = useGTGStore((state: any) => state.setCurrHint);
   const currHint = useGTGStore((state: any) => state.currHint);
-  const [hintUnlock, setHintUnlock] = useState<number>(1);
   const gameplayed = useGTGStore((state: any) => state.gameplayed);
   const listAns = useGTGStore((state: any) => state.listAns);
   const setListAns = useGTGStore((state: any) => state.setListAns);
   const setGamePlayed = useGTGStore((state: any) => state.setGamePlayed);
+  const hintUnlock = useGTGStore((state: any) => state.hintUnlock)
+  const setHintUnlock = useGTGStore((state: any) => state.setHintUnlock)
 
   useEffect(() => {
     const messageLose = () => {
       Swal.fire({
         title: "Oh no! Better luck next time!",
-        text: "The answer was: The Forgotten City",
+        text: `The answer was: ${game?.answer}`,
         icon: "error",
         confirmButtonText: "Close",
       });
     };
-    if (hintUnlock > 6) {
+    if (hintUnlock > 6 || listAns?.length === 6) {
       messageLose();
       setGamePlayed([...gameplayed, game?.id]);
       setCurrHint(game?.hints[5]);
@@ -37,7 +38,7 @@ export default function ListHint() {
         JSON.stringify({list_ans: listAns,hint_unlock: hintUnlock})
       );
     }
-  }, [hintUnlock]);
+  }, [hintUnlock,listAns]);
 
   return (
     <div className="flex py-4 items-center justify-between">

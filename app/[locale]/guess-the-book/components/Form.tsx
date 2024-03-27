@@ -9,24 +9,27 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import dataSearch from "@/jsons/games-name.json";
+import dataSearch from "@/jsons/books-name.json";
 import _ from "lodash";
 import { VscArrowSmallRight } from "react-icons/vsc";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { useGTGStore } from "@/stores/useGTGStore";
+import { useGTBStore } from "@/stores/useGTBStore";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import Confetti from "react-confetti";
 
 export default function Form() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const game = useGTGStore((state: any) => state.game);
-  const listAns = useGTGStore((state: any) => state.listAns);
-  const setListAns = useGTGStore((state: any) => state.setListAns);
+  const game = useGTBStore((state: any) => state.game);
+  const listAns = useGTBStore((state: any) => state.listAns);
+  const setListAns = useGTBStore((state: any) => state.setListAns);
   const [showConfetti,setShowConfetti] = useState(false)
-  const setGamePlayed = useGTGStore((state: any) => state.setGamePlayed);
-  const gameplayed = useGTGStore((state: any) => state.gameplayed);
-
+  const setGamePlayed = useGTBStore((state: any) => state.setGamePlayed);
+  const gameplayed = useGTBStore((state: any) => state.gameplayed);
+  const setHintUnlock = useGTBStore((state: any) => state.setHintUnlock)
+  const setCurrHint = useGTBStore((state: any) => state.setCurrHint);
+  const hintUnlock = useGTBStore((state: any) => state.hintUnlock)
+  
   useEffect(() => {
     const debouncedSearch = _.debounce((value) => {
       const trimmedValue = value.trim(); // Loại bỏ khoảng trắng đầu tiên
@@ -68,11 +71,11 @@ export default function Form() {
         setGamePlayed([...gameplayed, game?.id])
         setShowConfetti(true)
         localStorage.setItem(
-          "gamedle-data-guess-the-game-played",
+          "gamedle-data-guess-the-book-played",
           JSON.stringify([...gameplayed, game?.id])
         );
         localStorage.setItem(
-          `gamedle-data-guess-the-game-played-result-id:${game?.id}`,
+          `gamedle-data-guess-the-book-played-result-id:${game?.id}`,
           JSON.stringify({list_ans: listAns,hint_unlock: listAns?.length})
         );
       } else {
@@ -83,6 +86,8 @@ export default function Form() {
           confirmButtonText: "Quay lại",
         });
         setListAns([...listAns, searchTerm]);
+        setHintUnlock()
+        setCurrHint(game.hints[hintUnlock])
       }
     }
   };
@@ -93,7 +98,7 @@ export default function Form() {
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="outline" className="w-full">
-            {searchTerm !== "" ? searchTerm : "Tìm kiếm một trò chơi..."}
+            {searchTerm !== "" ? searchTerm : "Tìm kiếm tên sách..."}
           </Button>
         </DrawerTrigger>
         <DrawerContent>
