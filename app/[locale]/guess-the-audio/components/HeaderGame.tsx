@@ -1,13 +1,10 @@
 import React from "react";
 import { GoHeart } from "react-icons/go";
 import { LuHelpCircle } from "react-icons/lu";
-import { VscGame } from "react-icons/vsc";
+import { RiMusic2Line } from "react-icons/ri";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useTranslations } from "next-intl";
@@ -17,8 +14,8 @@ export default function HeaderGame() {
   return (
     <div className="flex items-center mb-4">
       <h1 className="font-bold text-xl flex items-center gap-2">
-        <VscGame className="w-6 h-6" />
-        Guess The Game
+        <RiMusic2Line className="w-6 h-6" />
+        Guess The Audio
       </h1>
       <div className="flex items-center gap-4 ml-auto">
         <Dialog>
@@ -71,8 +68,8 @@ export default function HeaderGame() {
           <div className="flex flex-col gap-4">
               <h1 className="font-bold text-xl">Hướng dẫn</h1>
               <div className="flex flex-col gap-4">
-                <p>Tìm kiếm cuốn sách mà bạn nghĩ có câu đó.</p>
-                <p>Nếu bạn hiểu sai, chúng tôi sẽ tiết lộ thêm một câu trong sách để giúp bạn.</p>
+                <p>Tìm kiếm âm thanh mà bạn nghĩ có âm thanh đó.</p>
+                <p>Nếu bạn hiểu sai, chúng tôi sẽ tiết lộ thêm một chút âm thanh để giúp bạn.</p>
                 <p>Bạn nhận được tổng cộng 6 lần đoán.</p>
                 <p>Chúc may mắn!</p>
               </div>
