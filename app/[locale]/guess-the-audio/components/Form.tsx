@@ -139,9 +139,9 @@ export default function Form() {
         <FaRegCircleCheck className="w-4 h-4 mr-2" /> Kiểm tra
       </Button>
       <div className="flex flex-col gap-2 w-full">
-        {listAns.map((_:any) => (
+        {listAns.map((_:any,index:number) => (
           <Button
-            key={_}
+            key={index}
             disabled
             variant={"outline"}
             className="line-clamp-1 select-none"
