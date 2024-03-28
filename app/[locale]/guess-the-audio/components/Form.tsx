@@ -9,27 +9,27 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import dataSearch from "@/jsons/games-name.json";
+import dataSearch from "@/jsons/audio-name.json";
 import _ from "lodash";
 import { VscArrowSmallRight } from "react-icons/vsc";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { useGTGStore } from "@/stores/useGTGStore";
+import { useGTAStore } from "@/stores/useGTAStore";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import Confetti from "react-confetti";
 
 export default function Form() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const game = useGTGStore((state: any) => state.game);
-  const listAns = useGTGStore((state: any) => state.listAns);
-  const setListAns = useGTGStore((state: any) => state.setListAns);
+  const game = useGTAStore((state: any) => state.game);
+  const listAns = useGTAStore((state: any) => state.listAns);
+  const setListAns = useGTAStore((state: any) => state.setListAns);
   const [showConfetti,setShowConfetti] = useState(false)
-  const setGamePlayed = useGTGStore((state: any) => state.setGamePlayed);
-  const gameplayed = useGTGStore((state: any) => state.gameplayed);
-  const setHintUnlock = useGTGStore((state: any) => state.setHintUnlock)
-  const setCurrHint = useGTGStore((state: any) => state.setCurrHint);
-  const hintUnlock = useGTGStore((state: any) => state.hintUnlock)
-
+  const setGamePlayed = useGTAStore((state: any) => state.setGamePlayed);
+  const gameplayed = useGTAStore((state: any) => state.gameplayed);
+  const setHintUnlock = useGTAStore((state: any) => state.setHintUnlock)
+  const setCurrHint = useGTAStore((state: any) => state.setCurrHint);
+  const hintUnlock = useGTAStore((state: any) => state.hintUnlock)
+  const setStart = useGTAStore((state: any) => state.setStart)
 
   useEffect(() => {
     const debouncedSearch = _.debounce((value) => {
@@ -62,7 +62,7 @@ export default function Form() {
 
   const handleCheck = () => {
     if (searchTerm !== "") {
-      if (game.answer === searchTerm) {
+      if (game?.answer === searchTerm) {
         Swal.fire({
           title: "Correct !",
           text: `The answer was: ${game?.answer}`,
@@ -72,13 +72,14 @@ export default function Form() {
         setGamePlayed([...gameplayed, game?.id])
         setShowConfetti(true)
         localStorage.setItem(
-          "gamedle-data-guess-the-game-played",
+          "gamedle-data-guess-the-audio-played",
           JSON.stringify([...gameplayed, game?.id])
         );
         localStorage.setItem(
-          `gamedle-data-guess-the-game-played-result-id:${game?.id}`,
+          `gamedle-data-guess-the-audio-played-result-id:${game?.id}`,
           JSON.stringify({list_ans: listAns,hint_unlock: listAns?.length})
         );
+        setStart()
       } else {
         Swal.fire({
           title: "Chưa đúng!",
@@ -87,8 +88,11 @@ export default function Form() {
           confirmButtonText: "Quay lại",
         });
         setListAns([...listAns, searchTerm]);
-        setHintUnlock()
-        setCurrHint(game.hints[hintUnlock])
+        setHintUnlock(hintUnlock + 1),
+        setCurrHint({
+          hint: hintUnlock + 1,
+          time: hintUnlock === 6 ? 15000 : (hintUnlock + 1) * 2000,
+        });
       }
     }
   };
@@ -99,14 +103,14 @@ export default function Form() {
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="outline" className="w-full">
-            {searchTerm !== "" ? searchTerm : "Tìm kiếm một trò chơi..."}
+            {searchTerm !== "" ? searchTerm : "Tìm kiếm một bài hát..."}
           </Button>
         </DrawerTrigger>
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm">
             <div className="p-4 pb-0">
               <Input
-                placeholder="Nhập tên game..."
+                placeholder="Nhập tên bài hát..."
                 value={searchTerm}
                 onChange={handleChange}
               />

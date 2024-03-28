@@ -71,7 +71,7 @@ const data = [
 // Ngày hiện tại
 const homNay: Date = new Date();
 // Ngày cụ thể bạn muốn tính đến
-const ngayCuThe: Date = new Date("2024-03-24"); // Thay '2024-03-30' bằng ngày bạn muốn
+const ngayCuThe: Date = new Date("2024-03-28"); // Thay '2024-03-30' bằng ngày bạn muốn
 // Tính số mili giây giữa hai ngày
 const soMiligiay: number = homNay.getTime() - ngayCuThe.getTime();
 // Chuyển đổi số mili giây thành số ngày
@@ -86,7 +86,7 @@ export default function GameFinish(_props: { id: string }) {
 
   useEffect(() => {
     const storedResult = localStorage.getItem(
-      `gamedle-data-guess-the-game-played-result-id:${_props.id}`
+      `gamedle-data-guess-the-audio-played-result-id:${_props.id}`
     );
     if (storedResult) {
       setResult(JSON.parse(storedResult));
@@ -116,7 +116,7 @@ export default function GameFinish(_props: { id: string }) {
             result?.list_ans?.length
           }🟥   ${
             6 - result?.list_ans?.length
-          }🟩    https://gamedle.online/guess-the-game?id=${game?.id}`
+          }🟩    https://gamedle.online/guess-the-audio?id=${game?.id}`
         )}
       >
         <FaShareAlt className="mr-2 w-4 h-4" />{" "}
