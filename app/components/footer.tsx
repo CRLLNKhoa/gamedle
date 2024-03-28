@@ -8,7 +8,7 @@ export default function Footer() {
         <Link href={"/"}>Gamedle</Link>
         <Link href={"/about"}>About</Link>
         <Link href={"/privacy"}>Privacy</Link>
-        <p>V.1.0.2</p>
+        <p>V.1.0.3</p>
     </div>
   )
 }
