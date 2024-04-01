@@ -16,13 +16,13 @@ export async function getGame(id: number) {
   }
 }
 
-export async function addGame(newdata: any) {
+export async function upChart(hint: string) {
   try {
     const supabase = await createSupabaseServerClient();
-    const { data, error } = await supabase
-      .from("guess_the_audio")
-      .insert([newdata])
-      .select();
+    const { data, error } = await supabase.rpc("increase_columns_by_id", {
+      input_id: 1,
+      column_to_increase: hint,
+    });
     if (error) {
       return { status: 400, data: [error] };
     } else return { status: 200, data: data };
@@ -31,21 +31,16 @@ export async function addGame(newdata: any) {
   }
 }
 
-export async function getGames(pageNumber: number, pageSize: number) {
+export async function getChart() {
   try {
-    // Tính chỉ số bắt đầu của bản ghi trong trang
-    const offset = (pageNumber - 1) * pageSize;
     const supabase = await createSupabaseServerClient();
-    const { data: dataList } = await supabase
-      .from("guess_the_game")
-      .select("id");
     const { data, error } = await supabase
-      .from("guess_the_game")
-      .select().order("created_at", {ascending: false})
-      .range(offset, offset + pageSize - 1); // Xác định phạm vi bản ghi cần lấy
+      .from("chart")
+      .select("*")
+      .eq("game_name", "guess_the_audio");
     if (error) {
       return { status: 400, data: [error] };
-    } else return { status: 200, data: data, totalPage: Math.ceil(Number(dataList?.length)) };
+    } else return { status: 200, data: data };
   } catch (error) {
     console.log(error);
   }

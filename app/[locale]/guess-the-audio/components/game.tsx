@@ -5,7 +5,7 @@ export default function Game(_props: { id: string }) {
   const [data, setData] = useState<any>(null);
   useEffect(() => {
     const storedResult = localStorage.getItem(
-      `gamedle-data-guess-the-game-played-result-id:${_props.id}`
+      `gamedle-data-guess-the-audio-played-result-id:${_props.id}`
     );
     if (storedResult) {
       setData(JSON.parse(storedResult));
@@ -31,7 +31,7 @@ export default function Game(_props: { id: string }) {
         <div className="flex gap-1 flex-1 justify-center">
           <div className="border text-xs">❓</div>
           <div className="border text-xs">❓</div>
-          <div className="border text-xs">❓</div>
+          <div className="border text-xs">❓</div> 
           <div className="border text-xs">❓</div>
           <div className="border text-xs">❓</div>
           <div className="border text-xs">❓</div>

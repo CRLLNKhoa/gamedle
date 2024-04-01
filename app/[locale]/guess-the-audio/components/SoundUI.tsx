@@ -7,6 +7,7 @@ import useSound from "use-sound";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import "react-circular-progressbar/dist/styles.css";
 import { FaPause } from "react-icons/fa6";
+import {motion} from "framer-motion"
 
 export default function SoundUI() {
   const [isLoading,setIsLoading] = useState(true)
@@ -14,6 +15,25 @@ export default function SoundUI() {
   const isPlaying = useGTAStore((state: any) => state.isPlaying);
   const currHint = useGTAStore((state: any) => state.currHint);
   const setIsPlaying = useGTAStore((state: any) => state.setIsPlaying);
+
+  const container = {
+    hidden: { opacity: 1},
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+  
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
 
   const [play, { stop }] = useSound(game?.link_audio, {
     sprite: {
@@ -40,6 +60,10 @@ export default function SoundUI() {
   useEffect(() => {
     setIsLoading(false)
   }, [])
+
+  useEffect(() => {
+    handlePlay(`hint${currHint.hint}`, currHint.time)
+  }, [currHint])
   
   if(isLoading){
     return  <div className="flex items-center justify-center border p-2 rounded-xl gap-4 bg-[#282828] animate-pulse text-white ">
@@ -48,25 +72,29 @@ export default function SoundUI() {
   }
 
   return (
-    <div className="flex flex-col border p-2 rounded-xl gap-4 bg-[#282828]">
+    <motion.div
+    variants={container}
+    initial="hidden"
+    animate="visible"
+>  <div className="flex flex-col border p-2 rounded-xl gap-4 bg-[#282828]">
       <div className="flex items-end gap-2 text-white flex-1">
-        <div
+        <motion.div variants={item}
           className="w-24 h-24 bg-white rounded-lg flex 
         items-center justify-center text-3xl select-none text-black"
         >
           ?
-        </div>
+        </motion.div>
         <div className="flex flex-col">
           <h1 className="line-clamp-2 leading-4 mb-1">Guess The Audio</h1>
-          <p className="flex items-center gap-2 text-xs">
+          <motion.p variants={item} className="flex items-center gap-2 text-xs">
             Genre:{" "}
             {currHint?.hint > 3 ? (
               <b className="line-clamp-1">{game?.info.genre}</b>
             ) : (
               <b className="line-clamp-1">____________</b>
             )}
-          </p>
-          <p className="flex items-center gap-2 text-xs">
+          </motion.p>
+          <motion.p variants={item} className="flex items-center gap-2 text-xs">
             Album:{" "}
             {currHint?.hint > 4 ? (
               <b className="line-clamp-1">
@@ -75,26 +103,26 @@ export default function SoundUI() {
             ) : (
               <b className="line-clamp-1">____________</b>
             )}
-          </p>
-          <p className="flex items-center gap-2 text-xs">
+          </motion.p>
+          <motion.p variants={item} className="flex items-center gap-2 text-xs">
             Artist:{" "}
             {currHint?.hint > 5 ? (
               <b className="line-clamp-1">{game?.info?.artist}</b>
             ) : (
               <b className="line-clamp-1">____________</b>
             )}
-          </p>
+          </motion.p>
         </div>
       </div>
       <div className="flex justify-between items-center text-white pr-2 pb-2">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center">
+          <motion.div variants={item} className="flex items-center">
             <IoIosTime className="mr-2 w-4 h-4" />
             {currHint?.hint > 1 ? <p>{game?.info?.length}</p> : <p>____</p>}
-          </div>
-          <p className="flex items-center gap-2 text-sm">
+          </motion.div>
+          <motion.p variants={item} className="flex items-center gap-2 text-sm">
             Release Year: {currHint?.hint > 2 ? <b>{game?.info.release_year}</b> : <b>____</b>}
-          </p>
+          </motion.p>
         </div>
         {isPlaying ? (
           <Button
@@ -119,6 +147,7 @@ export default function SoundUI() {
           </Button>
         )}
       </div>
-    </div>
+    </div></motion.div>
+  
   );
 }

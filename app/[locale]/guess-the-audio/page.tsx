@@ -31,7 +31,7 @@ export default function Page() {
     // Ngày hiện tại
     const homNay: Date = new Date();
     // Ngày cụ thể bạn muốn tính đến
-    const ngayCuThe: Date = new Date("2024-03-28"); // Thay '2024-03-30' bằng ngày bạn muốn
+    const ngayCuThe: Date = new Date("2024-04-01"); // Thay '2024-03-30' bằng ngày bạn muốn
     // Tính số mili giây giữa hai ngày
     const soMiligiay: number = homNay.getTime() - ngayCuThe.getTime();
     // Chuyển đổi số mili giây thành số ngày
@@ -49,8 +49,6 @@ export default function Page() {
     setIsClient(true);
     handleGetGame();
   }, [id]);
-
-  console.log(game)
 
   return (
     <main className="flex flex-col container flex-1 max-w-lg py-4">

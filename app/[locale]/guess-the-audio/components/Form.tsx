@@ -16,6 +16,7 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { useGTAStore } from "@/stores/useGTAStore";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import Confetti from "react-confetti";
+import { upChart } from "@/actions/guess-the-audio";
 
 export default function Form() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -23,13 +24,17 @@ export default function Form() {
   const game = useGTAStore((state: any) => state.game);
   const listAns = useGTAStore((state: any) => state.listAns);
   const setListAns = useGTAStore((state: any) => state.setListAns);
-  const [showConfetti,setShowConfetti] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false);
   const setGamePlayed = useGTAStore((state: any) => state.setGamePlayed);
   const gameplayed = useGTAStore((state: any) => state.gameplayed);
-  const setHintUnlock = useGTAStore((state: any) => state.setHintUnlock)
+  const setHintUnlock = useGTAStore((state: any) => state.setHintUnlock);
   const setCurrHint = useGTAStore((state: any) => state.setCurrHint);
-  const hintUnlock = useGTAStore((state: any) => state.hintUnlock)
-  const setStart = useGTAStore((state: any) => state.setStart)
+  const hintUnlock = useGTAStore((state: any) => state.hintUnlock);
+  const setStart = useGTAStore((state: any) => state.setStart);
+
+  const handleupChart = async () => {
+    const q = await upChart(`hint${listAns.filter((i: any) => i === "🟥").length + 1}`);
+  };
 
   useEffect(() => {
     const debouncedSearch = _.debounce((value) => {
@@ -69,17 +74,18 @@ export default function Form() {
           icon: "success",
           confirmButtonText: "Quay lại",
         });
-        setGamePlayed([...gameplayed, game?.id])
-        setShowConfetti(true)
+        setGamePlayed([...gameplayed, game?.id]);
+        setShowConfetti(true);
         localStorage.setItem(
           "gamedle-data-guess-the-audio-played",
           JSON.stringify([...gameplayed, game?.id])
         );
         localStorage.setItem(
           `gamedle-data-guess-the-audio-played-result-id:${game?.id}`,
-          JSON.stringify({list_ans: listAns,hint_unlock: listAns?.length})
+          JSON.stringify({ list_ans: listAns, hint_unlock: listAns?.length })
         );
-        setStart()
+        handleupChart();
+        setStart();
       } else {
         Swal.fire({
           title: "Chưa đúng!",
@@ -89,10 +95,10 @@ export default function Form() {
         });
         setListAns([...listAns, searchTerm]);
         setHintUnlock(hintUnlock + 1),
-        setCurrHint({
-          hint: hintUnlock + 1,
-          time: hintUnlock === 6 ? 15000 : (hintUnlock + 1) * 2000,
-        });
+          setCurrHint({
+            hint: hintUnlock + 1,
+            time: hintUnlock === 6 ? 15000 : (hintUnlock + 1) * 2000,
+          });
       }
     }
   };
@@ -143,7 +149,7 @@ export default function Form() {
         <FaRegCircleCheck className="w-4 h-4 mr-2" /> Kiểm tra
       </Button>
       <div className="flex flex-col gap-2 w-full">
-        {listAns.map((_:any,index:number) => (
+        {listAns.map((_: any, index: number) => (
           <Button
             key={index}
             disabled

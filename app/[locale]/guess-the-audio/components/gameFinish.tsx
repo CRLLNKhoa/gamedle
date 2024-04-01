@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useGTGStore } from "@/stores/useGTGStore";
+import { useGTAStore } from "@/stores/useGTAStore";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { FaShareAlt } from "react-icons/fa";
@@ -23,55 +23,21 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Game from "./game";
-const COLORS = [
-  "#1f77b4", // blue
-  "#ff7f0e", // orange
-  "#2ca02c", // green
-  "#d62728", // red
-  "#9467bd", // purple
-  "#8c564b", // brown
-];
+import { getChart } from "@/actions/guess-the-audio";
+import { useSearchParams } from "next/navigation";
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+} from "recharts";
 
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  index,
-}: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="white"
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
-
-const data = [
-  { score: 12, name: 1 },
-  { score: 21, name: 2 },
-  { score: 34, name: 3 },
-  { score: 23, name: 4 },
-  { score: 56, name: 5 },
-  { score: 72, name: 6 },
-];
 
 // Ngày hiện tại
 const homNay: Date = new Date();
 // Ngày cụ thể bạn muốn tính đến
-const ngayCuThe: Date = new Date("2024-03-28"); // Thay '2024-03-30' bằng ngày bạn muốn
+const ngayCuThe: Date = new Date("2024-04-01"); // Thay '2024-03-30' bằng ngày bạn muốn
 // Tính số mili giây giữa hai ngày
 const soMiligiay: number = homNay.getTime() - ngayCuThe.getTime();
 // Chuyển đổi số mili giây thành số ngày
@@ -79,19 +45,41 @@ const soNgay: number = Math.ceil(soMiligiay / (1000 * 60 * 60 * 24));
 
 export default function GameFinish(_props: { id: string }) {
   const trans = useTranslations("gamefinish");
-  const game = useGTGStore((state: any) => state.game);
-  const gameplayed = useGTGStore((state: any) => state.gameplayed);
+  const game = useGTAStore((state: any) => state.game);
+  const gameplayed = useGTAStore((state: any) => state.gameplayed);
   const [result, setResult] = useState<any>({});
   const [copiedText, copy] = useCopyToClipboard();
 
   useEffect(() => {
     const storedResult = localStorage.getItem(
-      `gamedle-data-guess-the-audio-played-result-id:${_props.id}`
+      `gamedle-data-guess-the-audio-result-id:${_props.id}`
     );
     if (storedResult) {
       setResult(JSON.parse(storedResult));
     }
   }, [_props.id, gameplayed]);
+
+  const [data, setData] = useState<any>([]);
+  const [total,setTotal] = useState(0)
+  const searchParams = useSearchParams();
+  const search = searchParams.get("id");
+  useEffect(() => {
+    const get = async () => {
+      const result = await getChart();
+      if (result?.status === 200) {
+        setData([
+          { score: result?.data[0]?.hint1 + 10, name: "Hint 1" },
+          { score: result?.data[0]?.hint2 + 10, name: "Hint 2" },
+          { score: result?.data[0]?.hint3 + 10, name: "Hint 3" },
+          { score: result?.data[0]?.hint4 + 10, name: "Hint 4" },
+          { score: result?.data[0]?.hint5 + 10, name: "Hint 5" },
+          { score: result?.data[0]?.hint6 + 10, name: "Hint 6" },
+        ]);
+        setTotal(result?.data[0]?.count_played + 60)
+      }
+    };
+    get();
+  }, [search]);
 
   const handleCopy = (text: string) => () => {
     copy(text)
@@ -151,7 +139,7 @@ export default function GameFinish(_props: { id: string }) {
             <div className="flex flex-wrap items-center max-h-[200px] gap-2 overflow-y-auto w-full">
               {Array.from({ length: soNgay }, (_, index) => index).map(
                 (_, index) => (
-                  <Game id={String(index + 1)} />
+                  <Game key={index} id={String(index + 1)} />
                 )
               )}
             </div>
@@ -175,52 +163,37 @@ export default function GameFinish(_props: { id: string }) {
             <DialogHeader>
               <DialogTitle>Game #{game?.id} Statistics</DialogTitle>
             </DialogHeader>
-            <div className="flex items-center flex-col gap-4 h-[240px] w-full pb-4">
+            <div className="flex items-center flex-col select-none gap-4 h-[240px] w-full pb-4">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart width={400} height={400}>
-                  <Pie
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={renderCustomizedLabel}
-                    outerRadius={80}
-                    fill="#8884d8"
+                <RadarChart
+                  width={420}
+                  height={420}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius="80%"
+                  data={data}
+                >
+                  <PolarGrid />
+                  <PolarAngleAxis dataKey="name" />
+                  <PolarRadiusAxis />
+                  <Radar
+                    name="Mike"
                     dataKey="score"
-                  >
-                    {data.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                </PieChart>
+                    stroke="#8884d8"
+                    fill="#2ca02c"
+                    fillOpacity={0.6}
+                  />
+                </RadarChart>
               </ResponsiveContainer>
               <div className="flex items-center flex-wrap justify-between w-full">
-                <div className="flex items-center gap-1">
-                  <div className="h-4 w-4 bg-[#1f77b4]"></div>
-                  <p>: 1</p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="h-4 w-4 bg-[#ff7f0e]"></div>
-                  <p>: 2</p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="h-4 w-4 bg-[#2ca02c]"></div>
-                  <p>: 3</p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="h-4 w-4 bg-[#d62728]"></div>
-                  <p>: 4</p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="h-4 w-4 bg-[#9467bd]"></div>
-                  <p>: 5</p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="h-4 w-4 bg-[#8c564b]"></div>
-                  <p>: 6</p>
+                <h1>Thống kê (Tỉ lệ trả lời đúng ở từng số gợi ý):</h1>
+                <div className="flex gap-4 flex-wrap items-center">
+                  <p>1: <b>{Math.floor((data[0]?.score)/total*100)}%</b></p>
+                  <p>2: <b>{Math.floor((data[1]?.score)/total*100)}%</b></p>
+                  <p>3: <b>{Math.floor((data[2]?.score)/total*100)}%</b></p>
+                  <p>4: <b>{Math.floor((data[3]?.score)/total*100)}%</b></p>
+                  <p>5: <b>{Math.floor((data[4]?.score)/total*100)}%</b></p>
+                  <p>6: <b>{Math.floor((data[5]?.score)/total*100)}%</b></p>
                 </div>
               </div>
             </div>

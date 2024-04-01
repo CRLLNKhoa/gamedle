@@ -10,7 +10,7 @@ import {
 import { useTranslations } from "next-intl";
 
 export default function HeaderGame() {
-  const trans = useTranslations("support");
+  const trans = useTranslations("header");
   return (
     <div className="flex items-center mb-4">
       <h1 className="font-bold text-xl flex items-center gap-2">
@@ -25,16 +25,11 @@ export default function HeaderGame() {
           <DialogContent>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col">
-                <h1 className="font-bold mb-2">{trans("title")}</h1>
+                <h1 className="font-bold mb-2">{trans("title1")}</h1>
                 <p className="text-sm">
-                  Tôi hy vọng bạn thích trò chơi giải đố hàng ngày này! Nếu điều
-                  đó làm cho ngày của bạn tươi sáng hơn, cách tốt nhất bạn có
-                  thể ủng hộ chúng tôi là chia sẻ trang web với bạn bè, đăng
-                  điểm số hàng ngày của bạn trên reddit, discord hoặc trang web
-                  yêu thích của bạn hoặc chia sẻ Gamedle với hãng tin tức yêu
-                  thích của bạn!
+                  {trans("content")}
                 </p>
-                <h1 className="font-bold my-2">Ủng hộ 1 ly trà đá</h1>
+                <h1 className="font-bold my-2"> {trans("title2")}</h1>
                 <div className="flex flex-col items-center justify-center">
                   <img
                     src="/qr.png"
@@ -62,7 +57,7 @@ export default function HeaderGame() {
 
         <Dialog>
           <DialogTrigger asChild>
-            <LuHelpCircle className="w-6 h-6" />
+            <LuHelpCircle className="w-6 h-6 cursor-pointer" />
           </DialogTrigger>
           <DialogContent>
           <div className="flex flex-col gap-4">

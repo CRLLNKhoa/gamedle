@@ -15,7 +15,8 @@ export default function ListHint() {
   const hintUnlock = useGTAStore((state: any) => state.hintUnlock);
   const setHintUnlock = useGTAStore((state: any) => state.setHintUnlock);
   const setStart = useGTAStore((state: any) => state.setStart);
-  console.log(game);
+  const start = useGTAStore((state: any) => state.start);
+
   useEffect(() => {
     const messageLose = () => {
       Swal.fire({
@@ -37,7 +38,7 @@ export default function ListHint() {
         JSON.stringify([...gameplayed, game?.id])
       );
       localStorage.setItem(
-        `gamedle-data-guess-the-game-audio-result-id:${game?.id}`,
+        `gamedle-data-guess-the-audio-result-id:${game?.id}`,
         JSON.stringify({ list_ans: listAns, hint_unlock: hintUnlock })
       );
       setStart();
@@ -68,6 +69,7 @@ export default function ListHint() {
                   time: hintUnlock === 6 ? 15000 : (hintUnlock + 1) * 2000,
                 });
             }}
+            disabled={!start}
             className="flex items-center bg-green-600 hover:bg-green-700 duration-500"
           >
             Bỏ qua <PiCaretDoubleRightFill className="w-4 h-4 ml-2" />
