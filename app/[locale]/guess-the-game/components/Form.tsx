@@ -62,7 +62,7 @@ export default function Form() {
 
   const handleCheck = () => {
     if (searchTerm !== "") {
-      if (game.answer === searchTerm) {
+      if (game?.answer.toLowerCase() === searchTerm.toLowerCase()) {
         Swal.fire({
           title: "Correct !",
           text: `The answer was: ${game?.answer}`,
