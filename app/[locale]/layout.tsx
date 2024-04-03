@@ -3,7 +3,7 @@ import "@/app/globals.css";
 import Hearder from "@/app/components/header";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Space_Grotesk } from "next/font/google";
-import 'sweetalert2/src/sweetalert2.scss'
+import "sweetalert2/src/sweetalert2.scss";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Footer from "../components/footer";
@@ -34,6 +34,13 @@ export default function RootLayout({
   const messages = useMessages();
   return (
     <html lang={locale}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7465388386459244"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
       <body
         className={cn(
           "flex flex-col justify-between min-h-screen",
