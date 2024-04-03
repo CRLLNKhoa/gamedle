@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { TbSquareRoundedLetterG } from "react-icons/tb";
 import CardGame from "../components/card-game";
+import AdBanner from "@/components/AdBanner";
 
 export default function Index() {
   const trans = useTranslations("home");
@@ -17,6 +18,11 @@ export default function Index() {
         <CardGame title="Guess The Audio"  textColor="text-orange-600 font-bold" mode={5} ques={"+99"} href="/guess-the-audio" img="/imgs/card/menu-icon-2.png"/>
         <CardGame title="Day Bygones" textColor="text-green-600 font-bold" mode={5} ques={45} href="/dbg" img="/imgs/card/Dino.png"/>
       </div>
+      <AdBanner
+          data-ad-slot="8056880929"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
     </main>
   );
 }

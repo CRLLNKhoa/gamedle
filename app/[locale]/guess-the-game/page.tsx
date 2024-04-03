@@ -9,6 +9,7 @@ import Loading from "./components/Loading";
 import GameFinish from "./components/gameFinish";
 import { useSearchParams } from "next/navigation";
 import HeaderGame from "./components/HeaderGame";
+import AdBanner from "@/components/AdBanner";
 
 export default function Page() {
   const searchParams = useSearchParams()
@@ -54,6 +55,11 @@ export default function Page() {
 
   return (
     <main className="flex flex-col container flex-1 max-w-lg py-4">
+      <AdBanner
+          data-ad-slot="8056880929"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
       <HeaderGame />
       {game ? (
         <Screen />
@@ -62,7 +68,17 @@ export default function Page() {
       )}
        {!gameplayed.includes(game?.id) &&  <Form />}
       {gameplayed.includes(game?.id) && <GameFinish id={game?.id} />}
+      <AdBanner
+          data-ad-slot="8056880929"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
       {isClient && <Timenewgame />}
+      <AdBanner
+          data-ad-slot="8056880929"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
     </main>
   );
 }
