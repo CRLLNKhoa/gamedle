@@ -7,8 +7,6 @@ import "sweetalert2/src/sweetalert2.scss";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Footer from "../components/footer";
-import { Head, Html, NextScript } from "next/document";
-import Script from "next/script";
 
 const fontSans = Space_Grotesk({
   weight: "400",
@@ -35,15 +33,14 @@ export default function RootLayout({
   // Receive messages provided in `i18n.ts`
   const messages = useMessages();
   return (
-    <Html lang={locale}>
-      <Head>
-        <Script
+    <html lang={locale}>
+      <head>
+        <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
-          strategy="lazyOnload"
           crossOrigin="anonymous"
-        ></Script>
-      </Head>
+        ></script>
+      </head>
       <body
         className={cn(
           "flex flex-col justify-between min-h-screen",
@@ -62,8 +59,8 @@ export default function RootLayout({
             <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
-        <NextScript />
+
       </body>
-    </Html>
+    </html>
   );
 }
